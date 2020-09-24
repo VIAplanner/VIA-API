@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require("express");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
@@ -14,7 +15,14 @@ const limiter = rateLimit({
     max: 100, // limit each IP to 100 requests per 15 minutes, so 9 requests per seconds
 });
 
-router.get("/auth/login", [limiter, cors(corsOptions)], (req, res) => {
+
+router.get("/auth", [limiter, authenticateToken, cors(corsOptions)], (req, res) => {
+    
+    res.json("success")
+
+})
+
+router.post("/auth/login", [limiter, cors(corsOptions)], (req, res) => {
     const username = req.body.username;
     const user = {
         username,
