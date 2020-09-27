@@ -1,6 +1,7 @@
 require("./db/mongoose")
 const express = require("express")
 const courseRouter = require("./routes/course")
+const authRouter = require("./routes/authentication")
 const rateLimit = require("express-rate-limit");
 const cors = require("cors")
 const axios = require("axios")
@@ -16,6 +17,7 @@ app.set('trust proxy', 1);
 
 app.use(express.json()) // parse request as json
 app.use(courseRouter)
+app.use(authRouter)
 
 if (process.env.NODE_ENV === 'production') {
     app.use((req, res, next) => {
